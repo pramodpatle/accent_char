@@ -77,4 +77,107 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+	public function index($id=0) {
+
+		 // For download csv sheet structure
+		 if ($this->request->data['downloadfile'] != "") {
+            $filename = "importroster.csv";
+            ob_clean();
+            $csv_file = fopen('php://output', 'w');
+            header("Content-Type: application/csv");
+            header('Content-Disposition: attachment; filename="'. $filename .'"');
+            /*live templete for roster. */
+            $header_row = array("Team",
+            "First Name",
+            "Last Name",
+            "Jersey Number",
+            "Coach", 
+            "Team Image Number",
+            "Individual Image Number",
+            "Alt 1",
+            "Alt 2",
+            "Alt 3",
+            "Alt 4",
+            "Alt 5",
+            "Buddy Image Number",
+            "Parent Name",
+            "Address1",
+            "Address2",
+            "City",
+            "State",
+            "Zip Code",
+            "Country",
+            "Cell Phone",
+            "Email",
+            "Age",
+            "Grade",
+            "Coach Name",
+            "Feet",
+            "Inches",
+            "Weight",
+            "Position",
+            "Favorite Pro",
+            "Player Stat",
+            "Products", 
+            "Packages",
+            "Additional Order",
+            "Retouching",
+            "Glasses Glare"
+            );
+            fputcsv($csv_file, $header_row, ',', '"');
+            fclose($csv_file);
+            die;
+        }
+
+
+		$this->loadModel('bdmembers');
+			$editdtls = $this->bdmembers->find('all', array(
+				'conditions'=>array(
+					'b_id'=>'266',
+					'id'	=>$id
+				),
+				'limit' => 1
+				)
+			);
+			$this->set('editdtls',$editdtls);
+			
+		
+		$dtls = $this->bdmembers->find('all', array(
+			'conditions'=>array(
+				'b_id'=>'266'
+			),
+			'order' => 'id DESC',
+			'limit' => 1000
+			)
+		);
+		$this->set('dtls',$dtls);
+		//print_r($dtls);exit;
+		if ($this->request->is('post')) {
+			if ($this->request->data['fname'] == ''){
+				echo "Blank fields";				
+			}else{
+				$this->bdmembers->create(array(
+					'b_id'							=>$this->request->data['b_id'],
+					'firstname'						=>$this->request->data['fname'],
+					'lastname'						=>$this->request->data['lname']
+				));
+				$this->bdmembers->save();
+			}
+		}
+		
+	}
+	public function delete($id=0) {
+		$this->loadModel('bdmembers');
+		$this->bdmembers->deleteAll(array('id' =>$id ), false);
+		//$this->redirect(array("controller" => "Pages"));
+		$this->redirect(array('action'=>'index'));
+
+
+	}
+	public function edit($id=0) {
+		$this->redirect(array('action'=>'index/'.$id));
+		//$this->redirect(array("controller" => "Pages",$id));
+
+	}
+
 }
