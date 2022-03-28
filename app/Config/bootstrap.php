@@ -111,3 +111,6 @@ CakeLog::config('error', array(
 	'types' => array('warning', 'error', 'critical', 'alert', 'emergency'),
 	'file' => 'error',
 ));
+
+Configure::write('projectpath','/accent_char/');
+Configure::write('projectdirpath','/accent_char/app/webroot/imageprocessing/');

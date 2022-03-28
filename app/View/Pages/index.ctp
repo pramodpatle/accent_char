@@ -1,6 +1,8 @@
+<?php header('Content-Type: text/html; charset=utf-8'); ?>
 <style>
 
 </style>
+
 
 <div class="col-xs-12 col-sm-8 col-md-9 col-lg-10">
 	<?php echo $this->Form->create('Downloadfile',array('method'=>'post','class'=>'downform'));?>
@@ -19,17 +21,17 @@
                 <input type="hidden" value="266" name="b_id">
 						First Name *: 
 							<?php if($editdtls){ ?>
-								<input type="text" name="fname" id="fname"  style="max-width: 250px;" value="<?php if ($editdtls[0]['bdmembers']['firstname']==''){echo "";}else{echo $editdtls[0]['bdmembers']['firstname'];} ?>" minlength="5">
+								<input type="text" name="fname" id="fname"  style="width:20%;max-width: 500px;" value="<?php if ($editdtls[0]['bdmembers']['firstname']==''){echo "";}else{echo $editdtls[0]['bdmembers']['firstname'];} ?>" minlength="5">
 							<?php }else { ?>
-								<input type="text" name="fname" id="fname" style="max-width: 250px;" value="" minlength="5">
+								<input type="text" name="fname" id="fname" style="width:20%;max-width: 500px;" value="" minlength="5">
 							<?php }?>
 								<br>
 								<br>
 						Last Name *:
 							<?php if($editdtls){ ?>
-								<input type="text" name="lname" id="lname" class="form-control" style="max-width: 250px;" value="<?php if ($editdtls[0]['bdmembers']['lastname']==''){echo "";}else{echo $editdtls[0]['bdmembers']['lastname'];} ?>"  minlength="5">
+								<input type="text" name="lname" id="lname" class="form-control" style="width:20%;max-width: 500px;" value="<?php if ($editdtls[0]['bdmembers']['lastname']==''){echo "";}else{echo $editdtls[0]['bdmembers']['lastname'];} ?>"  minlength="5">
 							<?php }else { ?>
-								<input type="text" name="lname" id="lname" class="form-control" style="max-width: 250px;" value=""  minlength="5">
+								<input type="text" name="lname" id="lname" class="form-control" style="width:20%;max-width: 500px;" value=""  minlength="5">
 							<?php } ?>
 								<br>
 									
