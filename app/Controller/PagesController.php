@@ -30,6 +30,8 @@ App::uses('AppController', 'Controller');
  */
 class PagesController extends AppController {
 
+	public $name = 'Pages';
+    
 /**
  * This controller does not use a model
  *
@@ -77,6 +79,21 @@ class PagesController extends AppController {
 			throw new NotFoundException();
 		}
 	}
+	public function listing($id=0) {
+		$this->loadModel('bdmembers');
+		$org_id=101;
+		$job_id=201;
+		$dtls = $this->bdmembers->find('all', array(
+			'conditions'=>array(
+				'b_id'=>'266'
+			),
+			'order' => 'id DESC',
+			'limit' => 1000
+			)
+		);
+		$this->set('dtls',$dtls);
+	}
+
 	public function index($id=0) {
 		$this->loadModel('bdmembers');
 		$org_id=101;
@@ -127,6 +144,36 @@ class PagesController extends AppController {
             "Glasses Glare"
             );
             fputcsv($csv_file, $header_row, ',', '"');
+            fclose($csv_file);
+            die;
+         }
+
+		 if ($this->request->data['downloadfile1'] != "") {
+			$dtls = $this->bdmembers->find('all', array(
+				'conditions'=>array(
+					'b_id'=>'266'
+				),
+				'order' => 'id DESC',
+				'limit' => 1000
+				)
+			);
+			
+
+            $filename = "exportroster.csv";
+            ob_clean();
+            $csv_file = fopen('php://output', 'w');
+            header("Content-Type: application/csv");
+            header('Content-Disposition: attachment; filename="'. $filename .'"');
+            /*live templete for roster. */
+            $header_row = array("Team",
+            "First Name",
+            "Last Name"
+            );
+			fputcsv($csv_file, $header_row, ',', '"');
+			foreach($dtls as $key => $value){
+				$header_row = array("Team",$value['bdmembers']['firstname'],$value['bdmembers']['lastname']);
+				fputcsv($csv_file, $header_row, ',', '"');
+			}
             fclose($csv_file);
             die;
          }
