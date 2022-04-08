@@ -22,6 +22,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
 
 <head>
     <?php echo $this->Html->charset(); ?>
+    
     <title>
         <?php echo $cakeDescription ?>:
         <?php echo $this->fetch('title'); ?>
@@ -29,7 +30,7 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     <?php
 		echo $this->Html->meta('icon');
 		echo $this->Html->css('cake.generic');
-		echo $this->fetch('meta');
+        echo $this->fetch('meta');
 		echo $this->fetch('css');
 		echo $this->fetch('script');
 	?>
@@ -39,13 +40,20 @@ $cakeVersion = __d('cake_dev', 'CakePHP %s', Configure::version())
     <div id="container">
         <div id="header">
             <h1><?php echo $this->Html->link($cakeDescription, 'https://cakephp.org'); ?></h1>
+            <h1>Menu => <?php echo $this->Html->link('CRUD', Router::url('/', true).'Pages/crud'); ?> ||
+            <?php echo $this->Html->link('Import', Router::url('/', true).'Pages/import'); ?> ||
+            <?php echo $this->Html->link('Export', Router::url('/', true).'Pages/export'); ?> ||
+            <?php echo $this->Html->link('All In One', Router::url('/', true).'Pages'); ?></h1>
         </div>
+        
         <div id="content">
 
             <?php echo $this->Flash->render(); ?>
 
             <?php echo $this->fetch('content'); ?>
         </div>
+        
+        
         <div id="footer">
             <?php echo $this->Html->link(
 					$this->Html->image('cake.power.gif', array('alt' => $cakeDescription, 'border' => '0')),
